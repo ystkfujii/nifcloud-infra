@@ -24,6 +24,7 @@ resource "nifcloud_security_group_rule" "apiserver_from_all" {
   cidr_ip              = "0.0.0.0/0"
 }
 
+/*
 resource "nifcloud_security_group_rule" "etcd_from_apiserver" {
   security_group_names = [
     nifcloud_security_group.k8s_cp.group_name,
@@ -34,10 +35,11 @@ resource "nifcloud_security_group_rule" "etcd_from_apiserver" {
   protocol             = "TCP"
   source_security_group_name = nifcloud_security_group.k8s_cp.group_name
 }
+*/
 
 resource "nifcloud_security_group_rule" "kubelet_from_control_plane" {
   security_group_names = [
-    nifcloud_security_group.k8s_cp.group_name,
+    //nifcloud_security_group.k8s_cp.group_name,
     nifcloud_security_group.k8s_node.group_name,
   ]
   type                 = "IN"
@@ -46,7 +48,7 @@ resource "nifcloud_security_group_rule" "kubelet_from_control_plane" {
   protocol             = "TCP"
   source_security_group_name = nifcloud_security_group.k8s_cp.group_name
 }
-
+/*
 resource "nifcloud_security_group_rule" "kubecheduler_from_control_plane" {
   security_group_names = [
     nifcloud_security_group.k8s_cp.group_name,
@@ -57,7 +59,6 @@ resource "nifcloud_security_group_rule" "kubecheduler_from_control_plane" {
   protocol             = "TCP"
   source_security_group_name = nifcloud_security_group.k8s_cp.group_name
 }
-
 resource "nifcloud_security_group_rule" "kube_controller_manager_from_control_plane" {
   security_group_names = [
     nifcloud_security_group.k8s_cp.group_name,
@@ -68,6 +69,7 @@ resource "nifcloud_security_group_rule" "kube_controller_manager_from_control_pl
   protocol             = "TCP"
   source_security_group_name = nifcloud_security_group.k8s_cp.group_name
 }
+*/
 
 resource "nifcloud_security_group_rule" "nodeportservice_from_all" {
   security_group_names = [
@@ -91,4 +93,17 @@ resource "nifcloud_security_group_rule" "ssh_from_ops" {
   to_port              = local.ssh_port
   protocol             = "TCP"
   source_security_group_name = nifcloud_security_group.ops_server.group_name
+}
+
+resource "nifcloud_security_group_rule" "ssh_from_fujii_dev" {
+  security_group_names = [
+    nifcloud_security_group.k8s_cp.group_name,
+    nifcloud_security_group.k8s_node.group_name,
+    nifcloud_security_group.proxy_server.group_name,
+  ]
+  type                 = "IN"
+  from_port            = local.ssh_port
+  to_port              = local.ssh_port
+  protocol             = "TCP"
+  cidr_ip              = "164.70.16.71"
 }

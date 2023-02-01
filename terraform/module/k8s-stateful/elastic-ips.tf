@@ -32,7 +32,7 @@ resource "nifcloud_elastic_ip" "k8s_cp" {
 }
 
 #####
-# LB // need ?
+# LB 
 #
 resource "nifcloud_elastic_ip" "k8s_lb" {
   count = 1
