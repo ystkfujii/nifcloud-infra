@@ -1,0 +1,36 @@
+---
+
+
+- name: set hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+# TODO: setup /etc/hosts
+
+- name: apt-get update executed
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: common tools installed
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - vim
+    - curl
+    - jq
+    - unzip
+
+# https://github.com/vmware/open-vm-tools/wiki/Configuration#exclude-specific-interfaces-from-guestinfo
+- name: set exclude-nics
+  blockinfile:
+    dest: /etc/vmware-tools/tools.conf
+    block: |
+      [guestinfo]
+      exclude-nics=veth*,flannel*,cali*,br*
+  notify: open-vm-tools is restarted
+
+
+

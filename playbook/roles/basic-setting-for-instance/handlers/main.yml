@@ -1,0 +1,5 @@
+---
+- name: open-vm-tools is restarted
+  service:
+    name: open-vm-tools.service
+    state: restarted

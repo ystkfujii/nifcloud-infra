@@ -1,0 +1,50 @@
+---
+
+- name: Configure basic setting for instance.
+  hosts: all
+  roles:
+  - role: basic-setting-for-instance
+
+- name: Configure basic setting for k8s instance.
+  hosts:
+  - cp
+  - node
+  vars:
+    # geerlingguy.swap
+    swap_file_path: /swap.img
+    swap_file_state: absent
+    # containerd
+  roles:
+  # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#before-you-begin
+  - role: ystkfujii.swap
+  - role: geerlingguy.containerd
+  tags:
+  - 'basic_setting_for_k8s_instance'
+
+- name: setup controle plane
+  hosts: cp
+
+  vars:
+    # geerlingguy.kubernetes
+    kubernets_version: '1.25'
+    kubernetes_role: control_plane
+    kubernetes_pod_network:
+      cni: 'flannel'
+      cidr: '10.244.0.0/16'
+  roles:
+    - role: geerlingguy.kubernetes
+  tags:
+    - 'control_plane'
+  
+- name: setup node
+  hosts: node
+  vars:
+    kubernets_version: '1.25'
+    kubernetes_role: 'node'
+    kubernetes_pod_network:
+      cni: 'flannel'
+      cidr: '10.244.0.0/16'
+  roles:
+    - role: ystkfujii.kubernetes
+  tags:
+    - 'node'

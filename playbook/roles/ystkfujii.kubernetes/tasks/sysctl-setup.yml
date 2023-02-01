@@ -1,0 +1,30 @@
+---
+- name: Ensure procps is installed.
+  package:
+    name: "{{ procps_package }}"
+    state: present
+  when: >
+    ansible_distribution != 'Debian'
+    or ansible_distribution_major_version | int < 10
+
+- name: Enable br_netfilter module
+  modprobe:
+    name: br_netfilter
+    state: present
+  when: >
+    ansible_distribution != 'Debian'
+    or ansible_distribution_major_version | int < 10
+
+# See: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#forwarding-ipv4-and-letting-iptables-see-bridged-traffic
+- name: Let iptables see bridged traffic.
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+    state: present
+  loop:
+    - net.bridge.bridge-nf-call-iptables
+    - net.bridge.bridge-nf-call-ip6tables
+    - net.ipv4.ip_forward
+  when: >
+    ansible_distribution != 'Debian'
+    or ansible_distribution_major_version | int < 10

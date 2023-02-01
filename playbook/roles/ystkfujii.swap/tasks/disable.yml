@@ -1,0 +1,15 @@
+---
+- name: Disable swap (if configured).
+  command: swapoff -a
+  tags: ['skip_ansible_lint']
+
+- name: Ensure swap file doesn't exist (if configured).
+  file:
+    path: "{{ swap_file_path }}"
+    state: absent
+
+- name: Disable swapoff permanently
+  replace:
+    path: /etc/fstab
+    regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
+    replace: '# \1\2\3swap\4'
