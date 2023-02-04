@@ -8,23 +8,28 @@ output "private_network_name" {
   value       = nifcloud_private_lan.private_lan.private_lan_name
 }
 
-output "eip_proxy" {
-  description = "eip for proxy"
-  value       = nifcloud_elastic_ip.proxy[*].public_ip 
+output "egress_gip" {
+  description = "eip for egress"
+  value       = nifcloud_elastic_ip.egress[*].public_ip 
 }
 
-output "eip_ops" {
+output "lb_gip" {
+  description = "eip for lb"
+  value       = nifcloud_elastic_ip.k8s_lb[*].public_ip 
+}
+
+output "bastion_gip" {
   description = "eip for ops server"
-  value       = nifcloud_elastic_ip.ops_server[*].public_ip 
+  value       = nifcloud_elastic_ip.bastion[*].public_ip 
 }
 
-output "eip_k8s_cp" {
+output "controle_plane_gip" {
   description = "eip for k8s controle plane"
   value       = nifcloud_elastic_ip.k8s_cp[*].public_ip 
 }
 
-output "eip_k8s_node" {
-  description = "eip for k8s node"
-  value       = nifcloud_elastic_ip.k8s_node[*].public_ip 
+output "worker_gip" {
+  description = "eip for worker node"
+  value       = nifcloud_elastic_ip.k8s_worker[*].public_ip 
 }
 

@@ -1,29 +1,51 @@
-output "private_network_id" {
-  description = "private network id"
-  value       = module.k8s_stateful.private_network_id
+output "private_network_east" {
+  description = "private network info"
+  value       = {
+    id = module.k8s_stateful_east.private_network_id
+    name = module.k8s_stateful_east.private_network_name
+  }
 }
 
-output "private_network_name" {
-  description = "private network"
-  value       = module.k8s_stateful.private_network_name
+output "controle_plane_gip_east" {
+  value = module.k8s_stateful_east.controle_plane_gip
 }
 
-output "eip_proxy_server" {
-  description = "eip for proxy"
-  value       = module.k8s_stateful.eip_proxy
+output "worker_gip_east" {
+  value = module.k8s_stateful_east.worker_gip
 }
 
-output "eip_ops_server" {
-  description = "eip for ops server"
-  value       = module.k8s_stateful.eip_ops 
+output "egress_gip_east" {
+  value = module.k8s_stateful_east.egress_gip
+}
+output "lb_gip_east" {
+  value = module.k8s_stateful_east.lb_gip
+}
+output "bastion_gip_east" {
+  value = module.k8s_stateful_east.bastion_gip
 }
 
-output "eip_k8s_cp" {
-  description = "eip for k8s controle plane"
-  value       = module.k8s_stateful.eip_k8s_cp 
+output "private_network_west" {
+  description = "private network info"
+  value       = {
+    id = module.k8s_stateful_west.private_network_id
+    name = module.k8s_stateful_west.private_network_name
+  }
 }
 
-output "eip_k8s_node" {
-  description = "eip for k8s node"
-  value       = module.k8s_stateful.eip_k8s_node 
+output "controle_plane_gip_west" {
+  value = module.k8s_stateful_west.controle_plane_gip
+}
+
+output "worker_gip_west" {
+  value = module.k8s_stateful_west.worker_gip
+}
+
+output "egress_gip_west" {
+  value = module.k8s_stateful_west.egress_gip
+}
+output "lb_gip_west" {
+  value = module.k8s_stateful_west.lb_gip
+}
+output "bastion_gip_west" {
+  value = module.k8s_stateful_west.bastion_gip
 }

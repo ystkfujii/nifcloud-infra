@@ -1,19 +1,17 @@
-variable "env" {
-  type = string
-  validation {
-    condition = length(var.env) == 3
-    error_message = "Must be a 3 charactor long"
-  }
-}
-
-variable "cluster_name" {
-  type = string
-  validation {
-    condition = length(var.cluster_name) <= 9
-    error_message = "Must be no more than 9 charactor long"
-  }
-}
-
 variable "availability_zone" {
   type = string
+}
+
+variable "private_network_cidr" {
+  type = string
+}
+
+variable "elastic_ip" {
+  type =  object({
+    controle_plane = number
+    worker = number
+    lb = number
+    bastion = number
+    egress = number
+  })
 }

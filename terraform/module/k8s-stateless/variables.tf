@@ -1,43 +1,43 @@
-variable "env" {
-  type = string
-  validation {
-    condition = length(var.env) == 3
-    error_message = "Must be a 3 charactor long"
-  }
-}
-
-variable "key_name" {
-  type = string
-}
-
 variable "availability_zone" {
   type = string
 }
 
-variable "private_network_info" {
+variable "controle_plane_gip" {  
+  type = list(string)
+}
+
+variable "worker_gip" {  
+  type = list(string)
+}
+
+variable "lb_gip" {  
+  type = list(string)
+}
+
+variable "egress_gip" {  
+  type = list(string)
+}
+
+variable "bastion_gip" {  
+  type = list(string)
+}
+
+variable "private_network" {
   type = object({
-    id   = string
+    id = string
     name = string
   })
 }
 
-variable "eip_k8s_cp" {
-  type = list(string)
+variable "router" {
+  type = object({
+    ip_address  = string
+    pool_ip_start = string
+    pool_ip_stop = string
+  })
 }
 
-variable "eip_k8s_node" {
-  type = list(string)
-}
-
-variable "eip_ops_server" {
-  type = list(string)
-}
-
-variable "eip_proxy_server" {
-  type = list(string)
-}
-
-variable "accounting_type" {
-  type = string
-  default = "1"  // Monthly
+variable "cluster_resource_only" {
+  type = bool
+  default = false
 }

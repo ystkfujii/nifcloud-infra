@@ -1,30 +1,30 @@
 #####
-# Proxy
+# Egress
 #
-resource "nifcloud_elastic_ip" "proxy" {
-  count = 1
+resource "nifcloud_elastic_ip" "egress" {
+  count = var.elastic_ip.egress
 
   ip_type           = false
   availability_zone = var.availability_zone
-  description       = "proxy_${count.index}"
+  description       = "egress ${count.index}"
 }
 
 #####
-# Ops Server
+# Bastion Server
 #
-resource "nifcloud_elastic_ip" "ops_server" {
-  count = 1
+resource "nifcloud_elastic_ip" "bastion" {
+  count = var.elastic_ip.bastion
 
   ip_type           = false
   availability_zone = var.availability_zone
-  description       = "ops_server"
+  description       = "bastion server"
 }
 
 #####
 # Control Plane
 #
 resource "nifcloud_elastic_ip" "k8s_cp" {
-  count = 3
+  count = var.elastic_ip.controle_plane
   
   ip_type           = false
   availability_zone = var.availability_zone
@@ -35,7 +35,7 @@ resource "nifcloud_elastic_ip" "k8s_cp" {
 # LB 
 #
 resource "nifcloud_elastic_ip" "k8s_lb" {
-  count = 1
+  count = var.elastic_ip.lb
 
   ip_type           = false
   availability_zone = var.availability_zone
@@ -45,9 +45,10 @@ resource "nifcloud_elastic_ip" "k8s_lb" {
 #####
 # Node
 #
-resource "nifcloud_elastic_ip" "k8s_node" {
-  count = 3
+resource "nifcloud_elastic_ip" "k8s_worker" {
+  count = var.elastic_ip.worker
+
   ip_type           = false
   availability_zone = var.availability_zone
-  description       = "k8s_node_${count.index}"
+  description       = "k8s_worker_${count.index}"
 }
