@@ -48,6 +48,9 @@ module "private_network_configration_east" {
     router_ip_address = "192.168.1.1"
   }
 
+  next_hop = "192.168.2.255"                // TOID
+  controle_plane_network = "192.168.2.0/31" //TODO
+
   dhcp_config = {
     ipaddress_pool_start = "192.168.1.0"
     ipaddress_pool_stop = "192.168.1.255"
@@ -72,6 +75,8 @@ module "private_network_configration_west" {
     ipaddress_pool_start = "192.168.2.0"
     ipaddress_pool_stop = "192.168.2.255"
   }
+  next_hop = "192.168.2.255"                // TOID
+  controle_plane_network = "192.168.2.0/31" //TODO
 }
 
 resource "nifcloud_security_group" "bastion" {
@@ -125,7 +130,8 @@ module "k8s_worker_east" {
   bridge_router_ip = module.private_network_configration_east.bridge_network_ip
 
   depends_on = [
-    module.private_network_configration_east
+    module.private_network_configration_east,
+    nifcloud_instance.bastion_west,
   ]
 }
 
@@ -147,7 +153,8 @@ module "k8s_worker_west" {
   bridge_router_ip = module.private_network_configration_west.bridge_network_ip
 
   depends_on = [
-    module.private_network_configration_west
+    module.private_network_configration_west,
+    nifcloud_instance.bastion_west,
   ]
 }
 
@@ -165,6 +172,7 @@ module "k8s_controle_plane_west" {
   number_of_controle_plane = 3
 
   depends_on = [
-    module.private_network_configration_west
+    module.private_network_configration_west,
+    nifcloud_instance.bastion_west,
   ]
 }
