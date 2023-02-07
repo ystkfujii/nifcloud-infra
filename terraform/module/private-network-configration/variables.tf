@@ -1,16 +1,31 @@
+variable "unique_name" {
+  type = string  
+}
+
 variable "availability_zone" {
   type = string
 }
 
-variable "router_ip_address" {
+variable "bridge_network" {
+  type = object({
+    cidr = string
+    router_ip_address = string
+  })
+}
+
+variable "private_network" {
+  type = object({
+    cidr = string
+    router_ip_address = string
+  })
+}
+
+variable "controle_plane_network" {
   type = string
 }
 
-variable "private_network_info" {
-  type = object({
-    id   = string
-    name = string
-  })
+variable "next_hop" {
+  type = string
 }
 
 variable "dhcp_config" {

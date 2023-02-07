@@ -2,19 +2,8 @@ variable "availability_zone" {
   type = string
 }
 
-variable "pool_role" {
-  type = object({
-    full_name  = string
-    short_name = string
-  })
-}
-
 variable "instance_key_name" {
   type = string
-}
-
-variable "instnce_global_ip" {
-  type = list(string)  
 }
 
 variable "private_network_info" {
@@ -24,9 +13,35 @@ variable "private_network_info" {
   })
 }
 
-variable "instance_type" {
+variable "bastion_security_group" {
+  type = string
+}
+
+variable "egress_global_ip" {
+  type = string
+}
+
+variable "controle_plane_network" {
+  type = string  
+}
+
+variable "bridge_router_ip" {
+  type = string
+}
+
+variable "number_of_worker" {
+  type = number
+  default = 1
+}
+
+variable "worker_type" {
   type = string
   default = "e-large16"
+}
+
+variable "egress_type" {
+  type = string
+  default = "c-medium"
 }
 
 variable "ubuntu_image_name" {

@@ -3,7 +3,7 @@
 
 provider "registry.terraform.io/nifcloud/nifcloud" {
   version     = "1.7.0"
-  constraints = ">= 1.7.0, < 2.0.0"
+  constraints = ">= 1.7.0, 1.7.0, < 2.0.0"
   hashes = [
     "h1:2yyCuy0jH/OmQkaKP5Mn6FO012azyqnHDAfjRhutwLI=",
     "zh:04695e1d0e3079cde19582af95c3c8bf331cd734042c0b6c2d82a5109e0b089e",
