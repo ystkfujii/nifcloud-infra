@@ -40,15 +40,12 @@ resource "nifcloud_elastic_ip" "bastion_west" {
   description       = "bastion server"
 }
 
+resource "nifcloud_elastic_ip" "bastion_east" {
 
-resource "nifcloud_key_pair" "deployer" {
-  count = fileexists(local.keypath) ? 1 : 0
-  
-  key_name    = "deployerkey"
-  public_key  = local.keypath
-  description = "memo"
+  provider = nifcloud.east
 
-  depends_on = [
-    null_resource.sshkey_cut,
-  ]
+  ip_type           = false
+  availability_zone = local.east_az
+  description       = "bastion server"
 }
+
