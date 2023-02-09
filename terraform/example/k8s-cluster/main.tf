@@ -12,7 +12,7 @@ locals {
   west_az               = "west-11"
   east_az               = "east-11"
 
-  instance_key_name     = "terraform"
+  instance_key_name     = "deployerkey"
   bridge_network_cidr   = "192.168.1.0/24"
 
   ###

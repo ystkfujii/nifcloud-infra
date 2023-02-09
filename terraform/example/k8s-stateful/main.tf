@@ -49,3 +49,19 @@ resource "nifcloud_elastic_ip" "bastion_east" {
   description       = "bastion server"
 }
 
+
+resource "nifcloud_key_pair" "deployer_west" {  
+  key_name    = "deployerkey"
+  public_key  = base64encode(file("./out/key.pub"))
+  description = "memo"
+
+}
+
+resource "nifcloud_key_pair" "deployer_east" {  
+
+  provider = nifcloud.east
+  
+  key_name    = "deployerkey"
+  public_key  = base64encode(file("./out/key.pub"))
+  description = "memo"
+}

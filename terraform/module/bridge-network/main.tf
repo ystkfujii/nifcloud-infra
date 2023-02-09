@@ -84,7 +84,7 @@ resource "nifcloud_instance" "egress" {
 
   network_interface {
     network_id = "net-COMMON_GLOBAL"
-    ip_address = var.bastion.public_ip
+    ip_address = var.egress.public_ip
   }
 
   network_interface {
