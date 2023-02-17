@@ -133,6 +133,10 @@ module "k8s_controle_plane_east" {
 
   bridge_network_cidr = local.bridge_network_cidr
   bridge_network_id = module.bridge_network_east.network_id
+
+  depends_on = [
+    module.bridge_network_east,
+  ]
 }
 
 #####
@@ -158,6 +162,9 @@ module "k8s_worker_east" {
   bridge_network_cidr = local.bridge_network_cidr
   bridge_network_id = module.bridge_network_east.network_id
 
+  depends_on = [
+    module.bridge_network_east,
+  ]
 }
 
 # west
@@ -181,4 +188,8 @@ module "k8s_worker_west" {
 
   bridge_network_cidr = local.bridge_network_cidr
   bridge_network_id = module.bridge_network_west.network_id
+
+  depends_on = [
+    module.bridge_network_west,
+  ]
 }
